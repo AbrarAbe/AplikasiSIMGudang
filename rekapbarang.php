@@ -10,7 +10,7 @@
 }
 
 #myInput {
-  background-image: url('/css/searchicon.png');
+  background-image: url('assets/images/line-chart.gif');
   background-position: 10px 10px;
   background-repeat: no-repeat;
   width: 100%;
@@ -75,7 +75,10 @@ do { ?>
   echo "<h2>Barang tidak ada !</h2>";
 }?> 
   
-</table>
+</table><br> 
+    <div>
+        <a class="btn btn-dark" href="enkripsirekapbarang.php" target="frmmenu">Enkripsi Rekap Barang</a>
+    </div>
 
 <script>
 function myFunction() {
