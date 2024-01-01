@@ -1,0 +1,67 @@
+body {
+  background-color: #F0ECE5;
+}
+.navbar{
+  background-color: #001936;
+}
+.container-fluid{
+  padding-right: 5px;
+}
+  
+.navbar-brand1{
+    display: flex;
+      padding-top: .3125rem;
+      padding-bottom: .3125rem;
+      font-size: 1.25 rem;
+      line-height: inherit;
+      white-space: nowrap;
+}
+
+p{
+  font-size: 25px;
+	color: white;
+}
+
+.container-fluid a:hover{
+  color: #9EC8B9;
+}
+
+.collapse{
+  float: left;
+  padding: 14px 50px;
+}
+.collapse a{
+  color: #f2f2f2;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: Lucida;
+}
+.collapse a:hover{
+  background-color: #9EC8B9;
+  color: #31304D;
+}
+.collapse a.split{
+  float: right;
+  background-color: #04AA6D;
+  color: white;
+}
+.container{
+  padding-top: 2%;
+  margin-bottom: 4.5%;
+}
+.container h2{
+  padding-top: 0.5vi;
+  padding-bottom: 1.5vi;
+}
+.form-group{
+  padding: 0.5%;
+}
+.btn{
+  float: right;
+  margin-top: 5%;
+}
+.margin-right{
+	margin-right: 30px;
+
+}
