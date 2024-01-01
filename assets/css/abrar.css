@@ -1,0 +1,51 @@
+h1{
+	color: white;
+}
+
+h2{
+	color: white;
+}
+
+h3{
+	color: white;
+}
+
+h4{
+	color: white;
+}
+
+h5{
+	color: white;
+}
+
+.login-container {
+min-height: 100vh;
+}
+
+.apa{
+	background-color: rgba(000, 000, 000, 0.6);
+}
+
+.margin15{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.margin60{
+	margin-bottom: 60px;
+}
+
+.marginform {
+--bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+	margin-bottom: 15px;
+	margin-right: calc(-.5 * var(--bs-gutter-x));
+	margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.alabel{
+	color: white;
+}
