@@ -1,77 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Form Hasil Cari Barang - SIM Gudang</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assets/css/abrar.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Cari Barang</title>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 <body>
-  
-<div class="container" style="margin-top: 15px;">
-  <h1>Form Hasil Cari Barang</h1>
-<form method="post">
-  <div class="form-group row">
-    <label for="KodeBarang" class="col-4 col-form-label">Kode Barang</label> 
-    <div class="col-8">
-      <input id="KodeBarang" name="KodeBarang" type="text" class="form-control" required="required">
+<div class="container mt-5">
+ <h2>Cari Barang</h2>
+ <form method="POST" action="">
+    <div class="form-group row">
+      <label for="KodeBarang" class="col-4 col-form-label">Kode Barang</label> 
+      <div class="col-8">
+        <input id="KodeBarang" name="KodeBarang" type="text" class="form-control" required="required">
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="NamaBarang" class="col-4 col-form-label">Nama Barang</label> 
-    <div class="col-8">
-      <input id="NamaBarang" name="NamaBarang" type="text" class="form-control" required="required">
+    <div class="form-group row" style="margin-top: 15px; margin-bottom: 15px;">
+      <div class="offset-4 col-8">
+        <button name="submit" type="submit" class="btn btn-primary">Cari Barang</button>
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="JumlahStok" class="col-4 col-form-label">Jumlah Stok</label> 
-    <div class="col-8">
-      <input id="JumlahStok" name="JumlahStok" type="text" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="text" class="col-4 col-form-label">Harga</label> 
-    <div class="col-8">
-      <input id="Harga" name="Harga" type="text" class="form-control">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="Satuan" class="col-4 col-form-label">Satuan</label> 
-    <div class="col-8">
-      <input id="Satuan" name="Satuan" type="text" class="form-control" required="required">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="TglAuditTerakhir" class="col-4 col-form-label">Tgl. Audit Terakhir</label> 
-    <div class="col-8">
-      <input id="TglAuditTerakhir" name="TglAuditTerakhir" type="date" class="form-control" value="<?php echo date('Y-m-d');?>">
-    </div>
-  </div> 
-  <div class="form-group row" style="margin-top: 15px;">
-  <div class="offset-4 col-8 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Simpan Hasil Koreksi Barang</button>
-      <button href="" class="btn btn-success">Hapus Barang</button>
-      <a href="barang.php" class="btn btn-primary">Form Barang</a>
-    </div>
-  </div>
-</form>
-<?php 
-if (isset($_POST['KodeBarang'])) {
-    $KodeBarang=filter_var($_POST['KodeBarang'],FILTER_SANITIZE_STRING);
-    include('koneksi.db.php');
-    $sql="select * from barang where KodeBarang = '".$KodeBarang."'";
-    $q=mysqli_query($koneksi,$sql);
-    $r=mysqli_fetch_array($q);
-    if (!empty($r)) {
-        echo $r['NamaBarang'];   
-    } else {
-        echo 'Barang tidak ditemukan !';
+ </form>
+ <?php 
+    if (isset($_POST['submit'])) {
+      $KodeBarang=filter_var($_POST['KodeBarang'],FILTER_SANITIZE_STRING);
+      include('koneksi.db.php');
+      $sql="SELECT * FROM `barang` WHERE `KodeBarang`='".$KodeBarang."'";
+      $q=mysqli_query($koneksi,$sql);
+      if (mysqli_num_rows($q)>0) {
+        $row=mysqli_fetch_assoc($q);
+        echo '<div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Success!</strong> Data barang ditemukan !.
+      </div>';
+      echo '
+      <div class="row">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Data Barang</h5>
+              <p class="card-text">
+                Kode Barang : '.$row['KodeBarang'].'<br>
+                Nama Barang : '.$row['NamaBarang'].'<br>
+                Jumlah Stok : '.$row['JumlahStok'].'<br>
+                Harga : '.$row['Harga'].'<br>
+                Satuan : '.$row['Satuan'].'<br>
+                Tgl. Audit Terakhir : '.$row['TglAuditTerakhir'].'
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>';
+      } else {
+        echo '<div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Gagal!</strong> Data barang tidak ditemukan !.
+      </div>';
+      }
     }
-    mysqli_close($koneksi);
-}
-?>
+    ?>
 </div>
 </body>
 </html>

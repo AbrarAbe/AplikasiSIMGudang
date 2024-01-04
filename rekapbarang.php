@@ -43,9 +43,9 @@
 </head>
 <body>
 
-<div class="container" style="margin-top: 15px;">
-<h1>Rekapitulasi Barang</h1>
-<h5>Daftar Rekapitulasi Barang Di Gudang</h5>
+<div class="container mt-5">
+<h2>Rekapitulasi Barang</h2>
+<h5> Daftar Rekapitulasi Barang Di Gudang</h5>
 
 <table id="myTable">
   <tr class="header">
@@ -77,7 +77,7 @@ do { ?>
   
 </table><br> 
     <div>
-        <a class="btn btn-dark" href="enkripsirekapbarang.php" target="frmmenu">Enkripsi Rekap Barang</a>
+        <a class="btn btn-primary" href="enkripsirekapbarang.php" target="frmmenu">Enkripsi Rekap Barang</a>
     </div>
 
 <script>

@@ -43,8 +43,9 @@
 </head>
 <body>
 
-<div class="container" style="margin-top: 15px;">
+<div class="container mt-5">
 <h2>Daftar Barang</h2>
+<a href="barang.php" class="btn btn-primary mb-3">Tambah Barang</a>
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 

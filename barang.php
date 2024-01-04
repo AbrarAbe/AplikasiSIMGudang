@@ -10,8 +10,8 @@
 </head>
 <body>
   
-<div class="container" style="margin-top: 15px;">
-  <h1>Form Tabel Barang</h1>
+<div class="container mt-5">
+  <h2>Form Tabel Barang</h2>
 <form method="post">
   <div class="form-group row">
     <label for="KodeBarang" class="col-4 col-form-label">Kode Barang</label> 
