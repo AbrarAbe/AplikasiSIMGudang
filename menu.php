@@ -1,10 +1,25 @@
+<?php
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    if ($_SESSION['Level'] === 'Admin') {
+        header('Location: admin.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Operator') {
+        header('Location: operator.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Umum') {
+        header('Location: umum.php');
+        exit;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Beranda Admin - SIM Gudang</title>
+    <title>Beranda - SIM Gudang</title>
     <link rel="stylesheet" href="assets/css/abrar.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>

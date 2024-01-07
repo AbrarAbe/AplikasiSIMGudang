@@ -3,20 +3,19 @@ session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
+} elseif ($_SESSION['Level'] === 'Admin') {
+    header('Location: admin.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Operator') {
+    header('Location: operator.php');
+    exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>Daftar Gudang - SIM Gudang</title>
-<script>
-function deleteGudang(kodeGudang) {
-  if (confirm("Anda yakin ingin menghapus gudang ini?")) {
-    window.location.href = 'hapusgudang.php?kodeGudang=' + kodeGudang;
-  }
-}
-</script>
+<title>Daftar Barang - SIM Gudang</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -61,31 +60,34 @@ function deleteGudang(kodeGudang) {
 <body>
 
 <div class="container mt-5">
-<h2>Daftar Gudang</h2>
-<a href="gudang.php" class="btn btn-primary mb-3">Tambah Gudang</a>
+<h2>Daftar Barang</h2>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari kode gudang.." title="Type in a name">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari kode barang.." title="Type in a name">
 
 <table id="myTable">
   <tr class="header">
-    <th style="width:20%;">Kode Gudang</th>
-    <th style="width:65%;">Alamat</th>
-    <th style="text-align:center; width:15%;">Opsi</th>
+    <th style="width:25%;">Kode Barang</th>
+    <th style="width:30%;">Nama Barang</th>
+    <th style="width:15%;">Jumlah Stok</th>
+    <th style="width:15%;">Satuan</th>
+    <th style="width:15%;">Harga</th>
   </tr>
 <?php include('koneksi.db.php');
-$sql="select * from gudang";
+$sql="select * from barang";
 $q=mysqli_query($koneksi,$sql);
 $r=mysqli_fetch_array($q);
 if (!empty($r)) {
 do { ?>
   <tr>
-    <td><?php echo $r['KodeGudang'];?></td>
-    <td><?php echo $r['Alamat'];?></td>
-    <td><button onclick="deleteGudang('<?php echo $r['KodeGudang']; ?>')" style="margin-left:25%" class="btn btn-danger">Hapus</button></td>
+    <td><?php echo $r['KodeBarang'];?></td>
+    <td><?php echo $r['NamaBarang'];?></td>
+    <td><?php echo $r['JumlahStok'];?></td>
+    <td><?php echo $r['Satuan'];?></td>
+    <td>Rp<?php echo $r['Harga'];?></td>
   </tr>
 <?php } while($r=mysqli_fetch_array($q)); 
 } else {
-  echo "<h2>Gudang tidak ada !</h2>";
+  echo "<h2>Barang tidak ada !</h2>";
 }?> 
   
 </table>

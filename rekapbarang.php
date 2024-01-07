@@ -1,6 +1,18 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
+<title>Rekap Barang - SIM Gudang</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -50,11 +62,11 @@
 <table id="myTable">
   <tr class="header">
     <th style="width:20%;">Kode Barang</th>
-    <th style="width:25%;">Nama Barang</th>
-    <th style="width:20%;">Waktu Transaksi</th>
+    <th style="width:20%;">Nama Barang</th>
+    <th style="width:15%;">Waktu Transaksi</th>
     <th style="width:15%;">Status Transaksi</th>
-	<th style="width:10%;">Jumlah Stok</th>
-	<th style="width:30%;">Lokasi Gudang</th>
+    <th style="width:15%;">Jumlah Stok</th>
+    <th style="width:15%;">Lokasi Gudang</th>
   </tr>
 <?php include('koneksi.db.php');
 $sql="select * from barang inner join barangdigudang on barang.Kodebarang=barangdigudang.Kodebarang inner join gudang on gudang.Kodegudang=barangdigudang.Kodegudang";
@@ -65,9 +77,9 @@ do { ?>
   <tr>
     <td><?php echo $r['KodeBarang'];?></td>
     <td><?php echo $r['NamaBarang'];?></td>
-	<td><?php echo $r['TglAuditTerakhir'];?></td>
-	<td><?php echo $r['StatusTransaksi'];?></td>
-	<td><?php echo $r['JumlahStok'];?></td>
+    <td><?php echo $r['TglAuditTerakhir'];?></td>
+    <td><?php echo $r['StatusTransaksi'];?></td>
+    <td><?php echo $r['JumlahStok'];?></td>
     <td><?php echo $r['Alamat'];?></td>
   </tr>
 <?php } while($r=mysqli_fetch_array($q)); 

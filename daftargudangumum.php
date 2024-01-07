@@ -3,6 +3,12 @@ session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
+} elseif ($_SESSION['Level'] === 'Admin') {
+    header('Location: admin.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Operator') {
+    header('Location: operator.php');
+    exit;
 }
 ?>
 
@@ -10,13 +16,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <html>
 <head>
 <title>Daftar Gudang - SIM Gudang</title>
-<script>
-function deleteGudang(kodeGudang) {
-  if (confirm("Anda yakin ingin menghapus gudang ini?")) {
-    window.location.href = 'hapusgudang.php?kodeGudang=' + kodeGudang;
-  }
-}
-</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -62,15 +61,13 @@ function deleteGudang(kodeGudang) {
 
 <div class="container mt-5">
 <h2>Daftar Gudang</h2>
-<a href="gudang.php" class="btn btn-primary mb-3">Tambah Gudang</a>
 
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari kode gudang.." title="Type in a name">
 
 <table id="myTable">
   <tr class="header">
-    <th style="width:20%;">Kode Gudang</th>
-    <th style="width:65%;">Alamat</th>
-    <th style="text-align:center; width:15%;">Opsi</th>
+    <th style="width:25%;">Kode Gudang</th>
+    <th style="width:75%;">Alamat</th>
   </tr>
 <?php include('koneksi.db.php');
 $sql="select * from gudang";
@@ -81,7 +78,6 @@ do { ?>
   <tr>
     <td><?php echo $r['KodeGudang'];?></td>
     <td><?php echo $r['Alamat'];?></td>
-    <td><button onclick="deleteGudang('<?php echo $r['KodeGudang']; ?>')" style="margin-left:25%" class="btn btn-danger">Hapus</button></td>
   </tr>
 <?php } while($r=mysqli_fetch_array($q)); 
 } else {

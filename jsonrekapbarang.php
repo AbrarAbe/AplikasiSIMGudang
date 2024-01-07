@@ -10,6 +10,7 @@ do {
     $h['StatusTransaksi']=$r['StatusTransaksi'];
     $h['Jumlah']=$r['Jumlah'];
     $h['Alamat']=$r['Alamat'];
+    $h['Keterangan']=$r['Keterangan'];
     array_push($arrahhasil,$h);
 }while($r=mysqli_fetch_assoc($q));
 echo json_encode($arrahhasil);

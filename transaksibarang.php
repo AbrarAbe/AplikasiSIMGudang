@@ -1,7 +1,18 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SIM Gudang V.2023 - Form Transaksi Barang</title>
+<title>Transaksi - SIM Gudang</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="assets/css/abrar.css">
@@ -15,7 +26,7 @@ function cari(){
  
     //kode 1
     var request = $.ajax ({
-        url : "caribarang.php",
+        url : "scriptcaribarang.php",
         data : "KodeBarang="+val_cari,
         type : "POST",
         dataType: "html"
@@ -35,7 +46,7 @@ function cari(){
 </head>
 <body>
   
-<div class="container" style="margin-top: 15px;">
+<div class="container mt-3">
   <h1>Form Transaksi Barang</h1>
 <form method="post">
   <div class="form-group row">
@@ -96,7 +107,7 @@ function cari(){
       <textarea id="Keterangan" name="Keterangan" cols="40" rows="5" class="form-control"></textarea>
     </div>
   </div> 
-  <div class="form-group row" style="margin-top: 15px;">
+  <div class="form-group row mt-3 mb-3">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Submit</button>
     </div>

@@ -1,7 +1,15 @@
-<!DOCTYPE html>
-<?php session_start();
-	  if (!isset($_SESSION['loggedin'])) {header('Location:operator.php');
-	  exit; }
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Admin') {
+    header('Location: admin.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Operator') {
+    header('Location: operator.php');
+    exit;
+}
 ?>
 
 <html lang="en">
@@ -41,8 +49,8 @@
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Laporan</a>
           <ul class="dropdown-menu">
-            <li><a style="color: #0766AD;" class="dropdown-item" href="daftarbarang.php" target="frmmenu">Daftar Barang</a></li>
-            <li><a style="color: #0766AD;" class="dropdown-item" href="daftargudang.php" target="frmmenu">Daftar Gudang</a></li>
+            <li><a style="color: #0766AD;" class="dropdown-item" href="daftarbarangumum.php" target="frmmenu">Daftar Barang</a></li>
+            <li><a style="color: #0766AD;" class="dropdown-item" href="daftargudangumum.php" target="frmmenu">Daftar Gudang</a></li>
           </ul>
           </li>	
         </ul>

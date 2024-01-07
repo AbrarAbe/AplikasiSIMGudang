@@ -1,7 +1,15 @@
-<!DOCTYPE html>
-<?php session_start();
-	  if (!isset($_SESSION['loggedin'])) {header('Location:operator.php');
-	  exit; }
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Admin') {
+    header('Location: admin.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
 ?>
 
 <html lang="en">

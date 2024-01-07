@@ -1,3 +1,19 @@
+<?php
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    if ($_SESSION['Level'] === 'Admin') {
+        header('Location: admin.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Operator') {
+        header('Location: operator.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Umum') {
+        header('Location: umum.php');
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,26 +73,45 @@ background-size: cover
 				</form>
 <?php
 
-include('koneksi.db.php');
-
 if (isset($_POST['submit'])) {
-$KodeLogin=filter_var($_POST['KodeLogin'],FILTER_SANITIZE_STRING);
-$Password=filter_var($_POST['Password'],FILTER_SANITIZE_STRING);
-$Level=filter_var($_POST['Level'],FILTER_SANITIZE_STRING);
-
-$sql="INSERT INTO `pengguna`(`KodeLogin`, `Password`, `Level`) VALUES ('".$KodeLogin."','".$Password."','".$Level."')";
-
-$q=mysqli_query($koneksi,$sql);
-
-if($q) {
-	echo '<div class="alert alert-success alert-dismissible">
-	<strong>Berhasil!</strong> Akun anda berhasil terdaftar ! Anda dapat  <a href="login.php">Masuk</a> sekarang.
-	</div>';
-} else {
-	echo '<div class="alert alert-danger alert-dismissible">
-	<strong>Gagal!</strong> Gagal daftar akun. Harap ulangi lagi !
-	</div>';
-}
+    $KodeLogin = filter_var($_POST['KodeLogin'], FILTER_SANITIZE_STRING);
+    $Password = filter_var($_POST['Password'], FILTER_SANITIZE_STRING);
+    $Level = filter_var($_POST['Level'], FILTER_SANITIZE_STRING);
+	include('koneksi.db.php');
+    $sql = "SELECT * FROM pengguna WHERE KodeLogin = ?";
+    if ($stmt = $koneksi->prepare($sql)) {
+        $stmt->bind_param("s", $KodeLogin);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            echo '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Error!</strong> KodeLogin sudah ada.
+            </div>';
+        } else {
+            $sql = "INSERT INTO pengguna (KodeLogin, Password, Level) VALUES (?, ?, ?)";
+            if ($stmt = $koneksi->prepare($sql)) {
+                $stmt->bind_param("sss", $KodeLogin, $Password, $Level);
+                if ($stmt->execute()) {
+                    echo '<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Berhasil!</strong> Akun anda berhasil terdaftar! Anda dapat <a href="login.php">Masuk</a> sekarang.
+                    </div>';
+                } else {
+                    echo '<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Gagal!</strong> Gagal daftar akun. Harap ulangi lagi!
+                    </div>';
+                }
+                $stmt->close();
+            } else {
+                echo '<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Error!</strong> Error yang tidak diketahui.
+                </div>';
+            }
+        }
+    }
 }
 
 ?>

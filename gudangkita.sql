@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 09:42 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Jan 07, 2024 at 10:12 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,19 +30,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang` (
   `KodeBarang` varchar(30) NOT NULL,
   `NamaBarang` varchar(50) NOT NULL,
-  `JumlahStok` double(15,2) DEFAULT NULL,
+  `JumlahStok` int(20) DEFAULT NULL,
   `Harga` double(15,2) DEFAULT NULL,
   `Satuan` varchar(15) NOT NULL,
   `TglAuditTerakhir` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `barang`
 --
 
 INSERT INTO `barang` (`KodeBarang`, `NamaBarang`, `JumlahStok`, `Harga`, `Satuan`, `TglAuditTerakhir`) VALUES
-('132112', 'Pena', 3.00, 333.00, '1', '2023-12-17 00:00:00'),
-('432 134', 'sepatu zuper', 100.00, 1000000000.00, 'rupiah', '2023-12-16 00:00:00');
+('32212', 'Pena JOYKO', 101, 140000.00, 'Kotak', '2024-01-07 00:00:00'),
+('4213', 'Penghapus GREEBEL', 200, 150000.00, 'Kotak', '2024-01-02 00:00:00'),
+('5311', 'Pewarna FABLE CASTLE', 45, 450000.00, 'Kotak', '2023-11-15 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -58,7 +59,14 @@ CREATE TABLE `barangdigudang` (
   `Keterangan` text DEFAULT NULL,
   `KodeGudang` int(11) NOT NULL,
   `KodeBarang` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barangdigudang`
+--
+
+INSERT INTO `barangdigudang` (`IdTransaksi`, `WaktuTransaksi`, `StatusTransaksi`, `Jumlah`, `Keterangan`, `KodeGudang`, `KodeBarang`) VALUES
+(2, '2024-01-05 00:00:00', 'Keluar', 5.00, 'Fauzi membeli 5 stok barang', 2111, '5311');
 
 -- --------------------------------------------------------
 
@@ -69,14 +77,15 @@ CREATE TABLE `barangdigudang` (
 CREATE TABLE `gudang` (
   `KodeGudang` int(11) NOT NULL,
   `Alamat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gudang`
 --
 
 INSERT INTO `gudang` (`KodeGudang`, `Alamat`) VALUES
-(12132, 'bengklu');
+(1234, 'Kampung Bali, Kota Bengkulu'),
+(2111, 'Rawa Makmur, Kota Bengkulu');
 
 -- --------------------------------------------------------
 
@@ -88,7 +97,7 @@ CREATE TABLE `pengguna` (
   `KodeLogin` varchar(30) NOT NULL,
   `Password` varchar(30) NOT NULL,
   `Level` enum('Admin','Operator','Umum') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengguna`
@@ -97,8 +106,7 @@ CREATE TABLE `pengguna` (
 INSERT INTO `pengguna` (`KodeLogin`, `Password`, `Level`) VALUES
 ('1234', 'abrar', 'Admin'),
 ('12345', 'tamara', 'Operator'),
-('123456', 'umum', 'Umum'),
-('55', 'Fauzi', 'Umum');
+('123456', 'abrar', 'Umum');
 
 --
 -- Indexes for dumped tables
@@ -138,13 +146,13 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `barangdigudang`
 --
 ALTER TABLE `barangdigudang`
-  MODIFY `IdTransaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdTransaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `KodeGudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12133;
+  MODIFY `KodeGudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123457;
 
 --
 -- Constraints for dumped tables

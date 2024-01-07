@@ -1,6 +1,23 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
+<title>Daftar Barang - SIM Gudang</title>
+<script>
+function deleteBarang(kodeBarang) {
+  if (confirm("Anda yakin ingin menghapus barang ini?")) {
+    window.location.href = 'hapusbarang.php?kodeBarang=' + kodeBarang;
+  }
+}
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -47,15 +64,16 @@
 <h2>Daftar Barang</h2>
 <a href="barang.php" class="btn btn-primary mb-3">Tambah Barang</a>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari kode barang.." title="Type in a name">
 
 <table id="myTable">
   <tr class="header">
     <th style="width:20%;">Kode Barang</th>
     <th style="width:30%;">Nama Barang</th>
-	<th style="width:10%;">Jumlah Stok</th>
-	<th style="width:10%;">Satuan</th>
-	<th style="width:30%;">Harga Satuan</th>
+    <th style="width:15%;">Jumlah Stok</th>
+    <th style="width:10%;">Satuan</th>
+    <th style="width:10%;">Harga</th>
+    <th style="text-align:center; width:15%;">Opsi</th>
   </tr>
 <?php include('koneksi.db.php');
 $sql="select * from barang";
@@ -66,9 +84,10 @@ do { ?>
   <tr>
     <td><?php echo $r['KodeBarang'];?></td>
     <td><?php echo $r['NamaBarang'];?></td>
-	<td><?php echo $r['JumlahStok'];?></td>
-	<td><?php echo $r['Satuan'];?></td>
-	<td><?php echo $r['Harga'];?></td>
+    <td><?php echo $r['JumlahStok'];?></td>
+    <td><?php echo $r['Satuan'];?></td>
+    <td>Rp<?php echo $r['Harga'];?></td>
+    <td><button onclick="deleteBarang('<?php echo $r['KodeBarang']; ?>')" style="margin-left:25%" class="btn btn-danger">Hapus</button></td>
   </tr>
 <?php } while($r=mysqli_fetch_array($q)); 
 } else {

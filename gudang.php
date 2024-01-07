@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Operator') {
+    header('Location: operator.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +39,10 @@
       <textarea id="Alamat" name="Alamat" cols="40" rows="5" class="form-control"></textarea>
     </div>
   </div> 
-  <div class="form-group row" style="margin-top: 15px;">
+  <div class="form-group row mt-3 mb-3">
     <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Simpan Gudang Baru</button>
-      <a href="carigudang.php" class="btn btn-success">Cari Gudang</a>
+      <a href="carigudang.php" class="btn btn-success" style="margin-left: 10px;">Cari Gudang</a>
     </div>
   </div>
   </form>

@@ -2,6 +2,18 @@
 
 <?php
 session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    if ($_SESSION['Level'] === 'Admin') {
+        header('Location: admin.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Operator') {
+        header('Location: operator.php');
+        exit;
+    } elseif ($_SESSION['Level'] === 'Umum') {
+        header('Location: umum.php');
+        exit;
+    }
+}
 require('koneksi.db.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $KodeLogin = $_POST['KodeLogin'];

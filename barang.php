@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Operator') {
+    header('Location: operator.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +63,10 @@
       <input id="TglAuditTerakhir" name="TglAuditTerakhir" type="date" class="form-control" value="<?php echo date('Y-m-d');?>">
     </div>
   </div> 
-  <div class="form-group row" style="margin-top: 15px;">
-  <div class="offset-4 col-8 col-8">
+  <div class="form-group row mt-3 mb-3">
+    <div class="offset-4 col-8">
       <button name="submit" type="submit" class="btn btn-primary">Simpan Barang Baru</button>
-      <a href="caribarang.php" class="btn btn-success">Cari Barang</a>
+      <a href="caribarang.php" class="btn btn-success" style="margin-left: 10px;">Cari Barang</a>
     </div>
   </div>
 </form>

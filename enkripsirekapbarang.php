@@ -1,12 +1,24 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.php');
+    exit;
+} elseif ($_SESSION['Level'] === 'Umum') {
+    header('Location: umum.php');
+    exit;
+}
+?>
+
 <html>
 <head>
+<title>Enkripsi - SIM Gudang</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container" style="margin-top: 15px; margin-left: 15px; margin-right: 15px;">
-<h1>Enkripsi Rekap Barang</h1>
+<h2>Enkripsi Rekap Barang</h2>
 <h5>Daftar Rekapitulasi Barang yang terenkripsi</h5>
 
 <?php
@@ -75,6 +87,7 @@ foreach($arrahhasil as $k) {
     echo 'Status Transaksi : '.$k->StatusTransaksi."<br>";
     echo 'Jumlah : '.$k->Jumlah."<br>";
     echo 'Lokasi Gudang : '.$k->Alamat."<br>";
+    echo 'Keterangan : '.$k->Keterangan."<br>";
 }
 ?>
 <br>
